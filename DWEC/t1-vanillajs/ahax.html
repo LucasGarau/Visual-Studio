@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Mi first ajax</h1>
+    <div id="resultatpost">Aqui abra el post</div>
+    <div id="resultatget">Aqui abra el get</div>
+    <div id="resultmultiple">Aqui abra el multiple</div>
+    <script>
+ /*
+    Ajax - QUE ES?
+
+    Ajax significa Asyncrhornous Javascripty amnd xml
+    Tecnologia invetnada per microsoft per realitzar comunicacion asincroona amvbb les nostres pagines web
+    asincron: No sabem cuanty tarda la peticion
+
+    p.ex
+
+    animals.html ----> server (MySQL)
+    Obj animal <---- JSON
+
+    Què tarda?
+
+    const animals = getAnimals(); //Venen del servidor
+//Donarà un error!!!
+
+
+    */
+
+    /*
+XMLHttpRequest <--- Objecte Microsoft
+
+1- Carrega la pagina amb informacio completa
+2- Refresca Nomes una part de el codi dom
+    */
+
+    /*
+Agafar el resultat daquesta peticio.
+    */
+
+//GET
+/*
+    const xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange= function(){
+        if(this.readyState===4){
+            console.log(this.responseText)
+            document.querySelector("#resultatget").innerHTML=this.responseText
+        }else{
+            console.log("Ara esta a l'estat ", this.readyState);
+        }
+
+    }
+    xmlhttp.open("GET","http://35.239.93.21/asincron.php?num=1");
+    xmlhttp.send();
+
+    
+
+    //POST
+    const xmlhttp2 = new XMLHttpRequest();
+    xmlhttp2.onreadystatechange= function(){
+        if(this.readyState===4){
+            console.log(this.responseText)
+            document.querySelector("#resultatpost").innerHTML=this.responseText
+        }else{
+            console.log("Ara esta a l'estat ", this.readyState);
+        }
+
+    }
+    xmlhttp2.open("POST","http://35.239.93.21/asincron2.php?num=1");
+    xmlhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp2.send("num=1&nom=joan");
+    */
+    
+   for (let i = 0; i < 10; i++) {
+    const xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange= function(){
+        if(this.readyState===4){
+            console.log(this.responseText)
+            document.querySelector("#resultatget").innerHTML+=this.responseText + '<br>'
+        }else{
+            console.log("Ara esta a l'estat ", this.readyState);
+        }
+
+    }
+    xmlhttp.open("GET","http://35.239.93.21/asincron.php?num="+(i+1));
+    xmlhttp.send();
+
+   }
+
+    </script>
+   
+</body>
+</html>

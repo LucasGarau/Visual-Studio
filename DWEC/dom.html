@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Marca(nom){
+            this.nom=nom;
+        }
+        function Model(marca,nom){
+            this.marca=marca;
+            this.nom=nom;
+        }
+
+        var ford = new Marca("ford");
+        var citroen = new Marca("citroen");
+        var seat = new Marca("seat");
+
+        var mustang = new Model(ford,"Mustang");
+        var gt = new Model(ford,"GT");
+        var c4 = new Model(ford,"C4");
+        var ibiza = new Model(seat, "Ibiza");
+
+        //var modesl = [mustang,gt,c4,ibiza];
+        var models=[];
+        models.push(mustang);
+        models.push(gt);
+        models.push(c4);
+        models.push(ibiza);
+
+        //Ex1 
+document.querySelector("body").innerHTML="<p>" + ibiza.marca.nom + " " + ibiza.nom + "</p>"
+document.querySelector("body").innerHTML +="<p>" + gt.marca.nom + " " + gt.nom + "</p>"
+
+    </script>
+</body>
+</html>
