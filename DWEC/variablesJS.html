@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Page Title</title>
+</head>
+<body>
+    <script>
+        var a = null; // Null
+        var b; // Undefined
+        var c = false; //Boolean 
+        var d=4; // Int
+        var e=5.4; //Double
+        var f="hola"; //String
+        var h= { nom:'Joan' , cognoms:'Galmes' ,tecotxe:true}; //Objecte
+        var i= [3,"hola", 5.5 , true]; //Array
+        console.log(typeof f);
+        console.log(typeof e);
+
+        function hello() {
+            return "hello";
+        }
+        console.log(hello());
+
+    var j = function() {         //Funcion anonima no tiene nombre
+        return "hello2";
+        
+    }
+    console.log(j());
+
+    var k = {
+        nom:'Joan'
+        ,cognoms:'Galmes',
+        nomcomplet: function() {
+            return this.nom+ " " + this.cognoms;
+        }
+    }
+
+    var l = hello;
+    var m = hello();
+    console.log(l(),m);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var joan = {
+            nom: 'Joan'
+            , cognoms: 'Galmes',
+            nomcomplet: function () {
+                return this.nom + " " + this.cognoms;
+
+            }
+        }
+            function persona(nom, cognoms) {
+                this.nom = nom;
+                this.cognoms = cognoms;
+                this.nomcomplet = function () {
+                    return this.nom + " " + this.cognoms;
+
+                }
+            }
+        var pere = new persona('Pere', "Negre");
+        console.log(pere.nomcomplet());
+    </script>
+</body>
+
+</html>
