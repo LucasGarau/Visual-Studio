@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+const peticio1 = fetch("http://esliceu.codiblau.com/exercicis/ud5/usuaris/list") 
+
+.then(function (resposta1) {
+    console.log(resposta1);
+    return resposta1.json(); //Si triem .json  
+}).then(function (resposta2) { //Aixo ya es un objecte javascript per que ya el em parsecjat.
+    console.log(resposta2);
+});
+
+console.log("peticio1:" + peticio1);
+    </script>
+</body>
+</html>
