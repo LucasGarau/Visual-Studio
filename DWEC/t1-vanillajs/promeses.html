@@ -21,65 +21,164 @@
 
         //Quan acaba es crida al metode then si ha finalitzat be resolve o catch si no ha anat be (reject)
 
-        const wait = new Promise(function (resolve, reject) {
-            setTimeout(function () {
-                resolve("Ha acabat el resolve")
-            }, 5000)
-        }).then(function (valor) {
-            console.log("Ha entrat al then:", valor);
-        }).catch((valor) => console.log("Error", valor));
-
-        console.log(wait);
-        setTimeout(function () {
-            console.log(wait)
-
-        }, 8000);
-
-
-        //Ajax-fetch (ES6)
-        const peticio1 = fetch("http://esliceu.codiblau.com/exercicis/ud5/color?min=10&max=20") 
-
-        .then(function (resposta1) {
-            console.log(resposta1);
-            return resposta1.json(); //Si triem .json  
-        }).then(function (resposta2) { //Aixo ya es un objecte javascript per que ya el em parsecjat.
-            console.log(resposta2);
+        /*   const wait = new Promise(function (resolve, reject) {
+               setTimeout(function () {
+                   resolve("Ha acabat el resolve")
+               }, 5000)
+           }).then(function (valor) {
+               console.log("Ha entrat al then:", valor);
+           }).catch((valor) => console.log("Error", valor));
+   
+           console.log(wait);
+           setTimeout(function () {
+               console.log(wait)
+   
+           }, 8000);
+   */
+        /*
+                //Ajax-fetch (ES6)
+                const peticio1 = fetch("http://esliceu.codiblau.com/exercicis/ud5/color?min=10&max=20") 
+        
+                .then(function (resposta1) {
+                    console.log(resposta1);
+                    return resposta1.json(); //Si triem .json  
+                }).then(function (resposta2) { //Aixo ya es un objecte javascript per que ya el em parsecjat.
+                    console.log(resposta2);
+                });
+        
+                console.log("peticio1:" + peticio1);
+        
+                const peticio2 = fetch("http://esliceu.codiblau.com/exercicis/ud5/color?min=10&max=20") 
+        
+        peticio2.then(function (respsota) {
+            //RESPOSTAA?
+            //Resposta es un objecte response
+            //Objecte response te 3 metodes
+            return resposta1.json();
+        
+        }).then(function (respsota) { //Aixo ya es un objecte javascript per que ya el em parsecjat.
+            console.log(respsota);
         });
+        
+        
+                fetch("http://esliceu.codiblau.com/exercicis/ud5/color?min=10&max=20")
+                .then((r) => r.json())
+                .then((resposta)=>{
+                    console.log("Resposta 2", resposta)
+                });
+        /*
+                fetch("http://esliceu.codiblau.com/exercicis/ud5/color?min=10&max=20"),{
+                    method: "POST",
+                    body:"min=10&max=20",
+                    headers:{
+                        "Content-type" : "aplication/x-www-form-urlencode"
+                    }
+                }
+                .then((r) => r.json())
+                .then((resposta)=>{
+                    console.log("Resposta 2", resposta)
+                });
+        */
 
-        console.log("peticio1:" + peticio1);
+        /*
+         Crear una taula d'usuaris amb el resultat de
+         http://esliceu.codiblau.com/exercicis/ud5/usuaris/list
+        
+         Ho heu de cridar amb Get y returno un json
+        */
+       function init(){
+        const taula = document.createElement("TABLE");
+        const trheader = document.createElement("TR");
+        taula.appendChild(trheader);
+
+        const thUsername = document.createElement("TH");
+        thUsername.innerHTML = "nom";
+        taula.appendChild(thUsername);
+
+        const thcognom1 = document.createElement("TH");
+        thcognom1.innerHTML = "cognom1";
+        taula.appendChild(thcognom1);
+
+        const thcognom2 = document.createElement("TH");
+        thUsername.innerHTML = "thcognom2";
+        taula.appendChild(thcognom2);
+
+        
+        const thsexe = document.createElement("TH");
+        thUsername.innerHTML = "SEXE";
+        taula.appendChild(thsexe);
 
 
-        fetch("http://esliceu.codiblau.com/exercicis/ud5/color?min=10&max=20")
-        .then((r) => r.json())
-        .then((resposta)=>{
-            console.log("Resposta 2", resposta)
-        });
-/*
-        fetch("http://esliceu.codiblau.com/exercicis/ud5/color?min=10&max=20"),{
-            method: "POST",
-            body:"min=10&max=20",
-            headers:{
-                "Content-type" : "aplication/x-www-form-urlencode"
+
+      /*  fetch("http://esliceu.codiblau.com/exercicis/ud5/usuaris/list")
+            .then((r) => r.json())
+            .then((resposta) => {
+                for (let index = 0; index < resposta.length; index++) {
+                    const element = array[index];
+                    
+                }
+             
+                const trheader = document.createElement("TR");
+                taula.appendChild(trheader);
+
+                const thUsername = document.createElement("TH");
+                thUsername.innerHTML = "nom";
+                taula.appendChild(thUsername);
+
+                const thcognom1 = document.createElement("TH");
+                thcognom1.innerHTML = "cognom1";
+                taula.appendChild(thcognom1);
+
+                const thcognom2 = document.createElement("TH");
+                thUsername.innerHTML = "thcognom2";
+                taula.appendChild(thcognom2);
+
+            });
+
+       }
+       init();
+*/
+       /*
+Vull fer una llista d'usuaris on el tamany del text vingui condicionat per la variable width
+El color sigui la variable color i el color de el fons de la taula sigui background color.
+
+       */
+
+        //FETCH DE COLOR
+       // const peticio1 = fetch("http://esliceu.codiblau.com/exercicis/ud5/color?min=10&max=20") 
+function getcolor(){
+       fetch("http://esliceu.codiblau.com/exercicis/ud5/color?min=10&max=20")
+                .then((r) => r.json())
+                .then((resposta)=>{
+                    const colors = resposta;
+                }
+                );}
+
+
+
+function getnoms(params) {
+    fetch("http://esliceu.codiblau.com/exercicis/ud5/usuaris/list")
+                .then((r) => r.json())
+                .then((resposta)=>{
+                    for (let index = 0; index < resposta.length; index++) {
+                    const element = array[index];
+                    
+                }
+                });
             }
-        }
-        .then((r) => r.json())
-        .then((resposta)=>{
-            console.log("Resposta 2", resposta)
-        });
-*/
+}                
+        //FETCH DE NOMS
+        
+            init();
+
+/* Es poden paralitzars les dues peticions
+Promise.all(array de peticions).then(array de respostes)
+Promise.all espera a totes les promeses */
+
 
 /*
- Crear una taula d'usuaris amb el resultat de
- http://esliceu.codiblau.com/exercicis/ud5/usuaris/list
-
- Ho heu de cridar amb Get y returno un json
+10 Peticions a la crida asincron , PERO HEM de pintar el resultats ordenats.
 */
-
-fetch("http://esliceu.codiblau.com/exercicis/ud5/usuaris/list")
-        .then((r) => r.json())
-        .then((resposta)=>{
-            console.log("Resposta 2", resposta)
-        });
 
     </script>
 </body>
