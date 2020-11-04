@@ -12,7 +12,7 @@
         //XMLHTPrequest ---> Api Fetch (Promises javascript)
 
         //PROMISES
-
+/*
         const x = new Promise(function (res, rej) {
 
         })
@@ -86,6 +86,7 @@
         
          Ho heu de cridar amb Get y returno un json
         */
+       /*
        function init(){
         const taula = document.createElement("TABLE");
         const trheader = document.createElement("TR");
@@ -108,7 +109,7 @@
         thUsername.innerHTML = "SEXE";
         taula.appendChild(thsexe);
 
-
+*/
 
       /*  fetch("http://esliceu.codiblau.com/exercicis/ud5/usuaris/list")
             .then((r) => r.json())
@@ -145,7 +146,8 @@ El color sigui la variable color i el color de el fons de la taula sigui backgro
        */
 
         //FETCH DE COLOR
-       // const peticio1 = fetch("http://esliceu.codiblau.com/exercicis/ud5/color?min=10&max=20") 
+        // const peticio1 = fetch("http://esliceu.codiblau.com/exercicis/ud5/color?min=10&max=20") 
+        /*
 function getcolor(){
        fetch("http://esliceu.codiblau.com/exercicis/ud5/color?min=10&max=20")
                 .then((r) => r.json())
@@ -179,8 +181,94 @@ Promise.all espera a totes les promeses */
 /*
 10 Peticions a la crida asincron , PERO HEM de pintar el resultats ordenats.
 */
+/*
+const promises=[];
+for (let index = 0; index < 10; index++) {
+  fetch("http://esliceu.codiblau.com/exercicis/ud5/usuaris/list"+(i+1))
+  .then(r => r.text())
+  promises.push(promises).then(responseArray => {for (let index = 0; index < responseArray.length; index++) {
+      const element = array[index];
+  }
+  });  
+    
+}
+Promise.all(promises)
+
+/*ES8 - ASYNC AWAIT */ 
+
+/*
+ Async com await son paraules reservades per promeses
+ Quan una funcio retorna una promesa la podem esperar amb await
+
+ const peticio = await fetch("...")
+
+ PEERROOO!!!
+ Si emprem await la funcio ha de ser ASYNC!
+
+ Les funcions async es poden resoldre amb await.
+
+*/
+/*
+function getcolor(){
+      const colorFetch= await fetch("http://esliceu.codiblau.com/exercicis/ud5/color?min=10&max=20");
+      const color = await colorfetch.json();
+      console.log("Resposta Color amb sync await", color)
+}
+*/
+/* 
+CONSIDERACIONS IMPORTANTS A L'HORA DE FER UN ASYNC/ AWAIT
+
+1- await espera a acabar la promesa per continuar el codi ---> Fa el codi sincron.
+2- Resol el problema d'scope, la resposta es troba al mateix ambit de visibilitat.
+3- Molt alerta amb els bucles ---> A causa del n1 els bucles poden tardar molt mes
+*/
+
+//Function asincronambasyncawait
+async function Asincrom() {
+    const promises = [];
+    //Dins for evitar await.
+    for (let index = 0; index < 5; index++) {
+        const numerofetch = fetch("http://esliceu.codiblau.com/exercicis/ud5/asincron-get"+(index+1));
+        promises.push(numerofetch);
+        
+        
+    }
+    const respostes  = await Promise.all(promises);
+    for (let index = 0; index < respostes.length; index++) {
+        const r = await respostes[index].text();
+        document.querySelector("#resultat").innerHTML += r +"<br>";
+           
+       }
+
+/*
+   Promise.all(promises).then(respostes => {
+       for (let index = 0; index < respostes.length; index++) {
+        const r = await respostes[i].text();
+        document.querySelector("#resultat").innerHTML += r +"<br>";
+           
+       }
+   })
+      */  
+    /*
+USUARIS
+URL: http://esliceu.codiblau.com/exercicis/ud5/usuaris/list
+Method: GET
+Parameters:-
+
+TRANSPORT   
+URL: http://esliceu.codiblau.com/exercicis/ud5/usuaris/transport
+Method: POST
+Parameters: idtransport
+
+Heu de crear una taula dels usuaris de el seu nom contingi un "J" amb:
+
+username nom cognom1 cognom2 NOM_DEL_TRANSPORT (NO LA ID!)
+    */
+}
+Asincrom();
 
     </script>
+     
 </body>
 
 </html>
