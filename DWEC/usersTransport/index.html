@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    async function getnoms2(){
+        const colorFetch= await fetch("http://server247.cfgs.esliceu.net/exercicis/ud5/usuaris/list");
+        const users = await colorFetch.json();
+  //1-Filtren els usuaris.
+  const users = usuaris.filter(user=>(user.cognom1.includes("H") || user.cognom2.includes("H")))
+          const taula = document.createElement("TABLE");
+  
+          const trheader = document.createElement("TR");
+          taula.appendChild(trheader);
+  
+          const thUsername = document.createElement("TH");
+          thUsername.innerHTML = "nom";
+          taula.appendChild(thUsername);
+  
+          const thcognom1 = document.createElement("TH");
+          thcognom1.innerHTML = "cognom1";
+          taula.appendChild(thcognom1);
+  
+          const thcognom2 = document.createElement("TH");
+          thUsername.innerHTML = "thcognom2";
+          taula.appendChild(thcognom2);
+  
+          
+          const Transport = document.createElement("TH");
+          thUsername.innerHTML = "SEXE";
+          taula.appendChild(thsexe);
+  
+          for (let index = 0; index < users.length; index++) {
+              const element = array[index];
+              
+          }
+        console.log("Resposta Color amb sync await", color)
+  }
+  getnoms2(); 
+  
+  
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+    "short_name": "Vetplus",
+    "name": "Vetplus: clinica veterinària online",
+    "description": "Vetplus: clinica veterinària online",
+    "icons": [
+      {
+        "src": "/DIW/vetplusv2/assets/img/home_black_192x192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "/DIW/vetplusv2/assets/img/atom-icon.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/DIW/vetplusv2/view/animals.html",
+    "background_color": "#3367D6",
+    "display": "standalone",
+    "scope": "/DIW/vetplusv2/",
+    "theme_color": "#3367D6"
+  }

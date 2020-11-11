@@ -161,7 +161,7 @@ function getnoms(params) {
                 .then((r) => r.json())
                 .then((resposta)=>{
                     for (let index = 0; index < resposta.length; index++) {
-                    const element = array[index];
+                    const element = resposta[index];
                     
                 }
                 });
@@ -169,7 +169,7 @@ function getnoms(params) {
 }                
         //FETCH DE NOMS
         
-            init();
+       //     init();
 
 /* Es poden paralitzars les dues peticions
 Promise.all(array de peticions).then(array de respostes)
@@ -235,6 +235,8 @@ async function Asincrom() {
     const respostes  = await Promise.all(promises);
     for (let index = 0; index < respostes.length; index++) {
         const r = await respostes[index].text();
+
+        
         document.querySelector("#resultat").innerHTML += r +"<br>";
            
        }
@@ -264,8 +266,55 @@ Heu de crear una taula dels usuaris de el seu nom contingi un "J" amb:
 username nom cognom1 cognom2 NOM_DEL_TRANSPORT (NO LA ID!)
     */
 }
-Asincrom();
+//Asincrom();
+function getnoms() {
+    fetch("http://server247.cfgs.esliceu.net/exercicis/ud5/usuaris/list")
+                .then((r) => r.json())
+                .then((resposta)=>{
+                    for (let index = 0; index < resposta.length; index++) {
+                    const element = array[index];
+                        
+                }
+                });
+            }
+           // getnoms();
 
+
+         async function getnoms2(){
+      const colorFetch= await fetch("http://server247.cfgs.esliceu.net/exercicis/ud5/usuaris/list");
+      const users = await colorFetch.json();
+//1-Filtren els usuaris.
+const users = usuaris.filter(user=>(user.cognom1.includes("H") || user.cognom2.includes("H")))
+        const taula = document.createElement("TABLE");
+
+        const trheader = document.createElement("TR");
+        taula.appendChild(trheader);
+
+        const thUsername = document.createElement("TH");
+        thUsername.innerHTML = "nom";
+        taula.appendChild(thUsername);
+
+        const thcognom1 = document.createElement("TH");
+        thcognom1.innerHTML = "cognom1";
+        taula.appendChild(thcognom1);
+
+        const thcognom2 = document.createElement("TH");
+        thUsername.innerHTML = "thcognom2";
+        taula.appendChild(thcognom2);
+
+        
+        const Transport = document.createElement("TH");
+        thUsername.innerHTML = "SEXE";
+        taula.appendChild(thsexe);
+
+        for (let index = 0; index < users.length; index++) {
+            const element = array[index];
+            
+        }
+      console.log("Resposta Color amb sync await", color)
+}
+getnoms2();    
+        
     </script>
 </body>
 
