@@ -12,7 +12,7 @@
         //XMLHTPrequest ---> Api Fetch (Promises javascript)
 
         //PROMISES
-/*
+
         const x = new Promise(function (res, rej) {
 
         })
@@ -86,7 +86,6 @@
         
          Ho heu de cridar amb Get y returno un json
         */
-       /*
        function init(){
         const taula = document.createElement("TABLE");
         const trheader = document.createElement("TR");
@@ -109,7 +108,7 @@
         thUsername.innerHTML = "SEXE";
         taula.appendChild(thsexe);
 
-*/
+
 
       /*  fetch("http://esliceu.codiblau.com/exercicis/ud5/usuaris/list")
             .then((r) => r.json())
@@ -146,8 +145,7 @@ El color sigui la variable color i el color de el fons de la taula sigui backgro
        */
 
         //FETCH DE COLOR
-        // const peticio1 = fetch("http://esliceu.codiblau.com/exercicis/ud5/color?min=10&max=20") 
-        /*
+       // const peticio1 = fetch("http://esliceu.codiblau.com/exercicis/ud5/color?min=10&max=20") 
 function getcolor(){
        fetch("http://esliceu.codiblau.com/exercicis/ud5/color?min=10&max=20")
                 .then((r) => r.json())
@@ -159,7 +157,7 @@ function getcolor(){
 
 
 function getnoms(params) {
-    fetch("http://esliceu.codiblau.com/exercicis/ud5/usuaris/list")
+    fetch("http://server247.cfgs.esliceu.net/exercicis/ud5/usuaris/list")
                 .then((r) => r.json())
                 .then((resposta)=>{
                     for (let index = 0; index < resposta.length; index++) {
@@ -181,6 +179,7 @@ Promise.all espera a totes les promeses */
 /*
 10 Peticions a la crida asincron , PERO HEM de pintar el resultats ordenats.
 */
+
 /*
 const promises=[];
 for (let index = 0; index < 10; index++) {
@@ -268,7 +267,6 @@ username nom cognom1 cognom2 NOM_DEL_TRANSPORT (NO LA ID!)
 Asincrom();
 
     </script>
-     
 </body>
 
 </html>
