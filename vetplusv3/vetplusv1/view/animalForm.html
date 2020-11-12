@@ -15,26 +15,47 @@
     <input type="radio" name="sexe" value="MASC">Masculí
     <input type="radio" name="sexe" value="FEM">Femení
 
+    <div class="perro1">
     <label>Número de registre</label>
     <input type="text" name="numreg">
+    </div>
 
+    <div class="cavall1">
+    <label>Número de federat</label>
+    <input type="text" name="federat">
+    </div>
+<label>Typus</label>
+    <select name="rasa">
+        
+        <option value="ca">Ca (de raça o no)</option> 
+        <option value="cavall">Cavall (de
+            carreres o no)</option> 
+        <option value="moix">Moix</option>
+     </select>
+     <button onclick="location.href='animalForm.html'" type="button">
+        Enviar</button>
+<script>
+     
+</script>
     <script type="module">
+        
         import { getAnimal } from '../service/AnimalService.js'
 
+        
         function init() {
             const current = window.location.href;
             const url = new URL(current);
             const params = url.searchParams;
             const idAnimal = parseInt(params.get("identificador"));
+            jQuery(document).ready(function($){
 
+});
             if (idAnimal) {
-                const animal = getAnimal(idAnimal);
-
-                //Carregar dins el DOM
-                document.querySelector("input[name='nom']").value = animal.nom;
-                document.querySelector("input[name='numreg']").value = animal.numregistre;
-                document.querySelector("input[name='sexe'][value='"+animal.sexe+"']").checked=true;
+                getAnimal(idAnimal);  
             }
+
+
+        
         }
 
         //window.addEventListener('load', init);
@@ -43,7 +64,10 @@
             init()
         })()
 
+        
+
     </script>
+ 
 </body>
 
 </html>

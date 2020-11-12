@@ -27,7 +27,7 @@
             for (let i = 0; i < animals.length; i++) {
                 table += '<tr>';
                 table += '<td>' + animals[i].nom + '</td>';
-                table += '<td><a href="animalForm.html?identificador=' + animals[i].id + '">Editar</a></td>';
+                table += '<td><a href="animalForm.html?identificador=' + animals[i].idanimal + '">Editar</a></td>';
                 table += '</tr>';
             }
 
@@ -37,9 +37,11 @@
         }
 
         function init() {
-            const animals = getAnimals(); //service
-            console.log(animals);
+            getAnimals().then(animals => { 
             pintar(animals);
+});
+          
+           
         }
 
         //init();
