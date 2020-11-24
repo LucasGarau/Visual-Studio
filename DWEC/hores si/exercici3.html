@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Examen JS Vanilla</title>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Butterfly+Kids');
+
+        body {
+            background-color: #333;
+            font-family: 'Butterfly Kids', cursive;
+            color: white;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 60px;
+        }
+
+        main {
+            text-align: center;
+        }
+
+        canvas {
+            font-family: 'Butterfly Kids', cursive;
+        }
+
+        button {
+            font-family: 'Butterfly Kids', cursive;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>LES HORES</h1>
+    </header>
+    <main>
+        <canvas id="canvas" width="400" height="400"></canvas>
+        <input type="hidden" value="8" id="hours">
+        <input type="hidden" value="35" id="minutes">
+        <input type="hidden" value="55" id="seconds"> <br>
+        <div>
+            <div class="slidecontainer">
+                Horas
+                <input type="range" min="0" max="12" value="8" class="slider" id="hours1">
+            </div>
+            <div class="slidecontainer">
+                Minutos
+                <input type="range" min="0" max="60" value="35" class="slider" id="minutes1">
+              </div>
+              <div class="slidecontainer">
+                  Segundos
+                <input type="range" min="0" max="60" value="55" class="slider" id="seconds1">
+                <input type="number" id="sumahours" name="tentacles"
+                min="1">
+                <button type="button" id="clickMe">Click Me!</button>
+              </div>
+            <button onclick="loadHour('MSC')">Moscú</button>
+            <button onclick="loadHour('LIM')">Lima</button>
+            <button onclick="loadHour('ASU')">Asunción</button>
+            <button onclick="loadHour('TOK')">Tokio</button>
+            <button onclick="loadHour('SYD')">Sydney</button>
+        </div>
+    </main>
+
+    <script src="clock.js" type="text/javascript"></script>
+    <script>
+        /* Exercici 1 */
+        var slider1 = document.getElementById('hours1');
+        var slider2 = document.getElementById('minutes1');
+        var slider3 = document.getElementById('seconds1');
+
+        slider1.addEventListener('change', function() {
+            document.getElementById("hours").value =slider1.value;
+            drawClock()
+});
+slider2.addEventListener('change', function() {
+            document.getElementById("minutes").value =slider2.value;
+            drawClock()
+});
+slider3.addEventListener('change', function() {
+            document.getElementById("seconds").value =slider3.value;
+            drawClock()
+});
+
+        /* Exercici 2 */
+        async function horactual(){
+        const response = await fetch('http://server247.cfgs.esliceu.net/exercicis/data/now');
+    const animals = await response.json();
+   animals => { 
+       console.log(animals);
+ 
+        }   
+    };
+    document.getElementById("clickMe").onclick = horactual;
+        /* Exercici 3 */
+function loadHour(pblc){
+switch (pblc) {
+    case MSC:
+        
+        break;
+    case LIM:
+        
+        break;
+      
+        case ASU:
+        
+        break;
+        case TOK:
+        
+        break;
+        case SYD:
+        
+        break;
+       
+    default:
+        break;
+}
+};
+        /* Exercici 4 */
+
+
+    </script>
+</body>
+
+</html>
