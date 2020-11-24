@@ -2,13 +2,14 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInjector = require('html-webpack-injector');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-
+const WorkboxPlugin = require('workbox-webpack-plugin');
 module.exports = {
   mode: 'development',
   //entry: './src/index.js',
   entry: {
     app: './src/js/application.js',
     modernizr_head: './src/js/modernizr-2.5.2.min.js'
+    
   },
   devtool: 'inline-source-map',
   devServer: {
@@ -21,6 +22,12 @@ module.exports = {
       title: 'Output Management Kittens',
       template: './src/index.html'
     }),
+    new WorkboxPlugin.GenerateSW({
+      // these options encourage the ServiceWorkers to get in there fast
+      // and not allow any straggling "old" SWs to hang around
+      clientsClaim: true,
+      skipWaiting: true,
+    }),
     new HtmlWebpackInjector()
 
   ],
@@ -32,7 +39,17 @@ module.exports = {
   module: {
     rules: [
       
-      {
+      {  test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      ,
+    },
+    {
        // test: /\.css$/,
        test: /\.s[ac]ss$/i,
         use: [
@@ -62,4 +79,5 @@ module.exports = {
       
     ],
   },
+
 };

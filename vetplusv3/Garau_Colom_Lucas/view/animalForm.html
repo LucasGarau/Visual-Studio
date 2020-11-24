@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
 <html lang="en">
 
 <head>
@@ -9,7 +11,7 @@
 
 <body>
     <label>Nom</label>
-    <input type="text" name="nom">
+    <input type="text" name="nom" id="nom">
 
     <label>Sexe</label>
     <input type="radio" name="sexe" value="MASC">Masculí
@@ -17,7 +19,7 @@
 
     <div class="perro1">
     <label>Número de registre</label>
-    <input type="text" name="numreg">
+    <input type="text" name="numreg" id="numreg">
     </div>
 
     <div class="cavall1">
@@ -25,49 +27,46 @@
     <input type="text" name="federat">
     </div>
 <label>Typus</label>
-    <select name="rasa">
+    <select name="tipus" id="tipus">
         
         <option value="ca">Ca (de raça o no)</option> 
         <option value="cavall">Cavall (de
             carreres o no)</option> 
         <option value="moix">Moix</option>
      </select>
-     <button onclick="location.href='animalForm.html'" type="button">
-        Enviar</button>
-<script>
-     
-</script>
+     <button type="button" id="boto">Click Me!</button>
     <script type="module">
-        
-        import { getAnimal } from '../service/AnimalService.js'
+        import { getAnimal ,save,hiddeoptions} from '../service/AnimalService.js'
+
+      
+
 
         
         function init() {
+           
             const current = window.location.href;
             const url = new URL(current);
             const params = url.searchParams;
             const idAnimal = parseInt(params.get("identificador"));
-            jQuery(document).ready(function($){
-
-});
             if (idAnimal) {
                 getAnimal(idAnimal);  
             }
-
-
-        
+            document.querySelector("#boto").addEventListener("click",clickanimal)
         }
-
+                    
+        function clickanimal(){
+            save();
+                }
+                
         //window.addEventListener('load', init);
 
         (function(){
             init()
         })()
 
-        
-
+           
     </script>
- 
+
 </body>
 
 </html>
