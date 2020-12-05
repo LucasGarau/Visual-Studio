@@ -1,0 +1,7 @@
+@for $index from 1 through 6 {
+    h#{$index}{
+     $hxsize: $hxsize - 0.2em;
+        font-size: $hxsize;
+    }
+ 
+}
