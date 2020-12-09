@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <input id="cercador" type="text">
+    <div id=resultat></div>
+
+    <script>
+        let Aeroports=[];
+        let Resultat=[];
+        function Aeroport(codi,nom,latitud,longitud,ciutad){
+            this.codi=codi;
+            this.nom=nom;
+            this.latitud=latitud;
+            this.longitud=longitud;
+            this.ciutad=ciutad;
+        }
+
+        async function loadAeroports(){
+            const fetchAeroports= await fetch("http:/server247.cfgs.esliceu.net/exercicis/airports")
+            const aeroports = await fetchAeroports.json();
+
+            return aeroports.map(a=>new Aeroport(a.code,a.name,a.lat,a.lon,a.city));
+        }
+
+        function cercador(s){
+            return aeroports.filter(a=>a.nom.toUpperCase().includes(s.toUpperCase())||a.codi.toUpperCase().includes(s.toUpperCase())||a.ciutad.toUpperCase().includes(s.toUpperCase()))
+        }
+
+        function pintar(){
+const taula=document.createElement("TABLE");
+
+        const trHeader=document.createElement('TR');
+        taula.appendChild(trHeader);
+
+        const tdNom=document.createElement('TH');
+        tdNom.innerHTML="Nom";
+        trHeader.appendChild(tdNom);
+
+        const tdLatitud=document.createElement('TH');
+        tdLatitud.innerHTML="Latitud";
+        trHeader.appendChild(tdLatitud);
+
+        const tdLongitud=document.createElement('TH');
+        tdLongitud.innerHTML="Longitud";
+        trHeader.appendChild(tdLongitud);
+
+        const tdCiutad=document.createElement('TH');
+        tdCiutad.innerHTML="Ciutad";
+        trHeader.appendChild(tdCiutad);
+
+        resultad.forEach( r => {
+            const tr=document.createElement('TR');
+        taula.appendChild(tr);
+
+        const tdNom=document.createElement('TH');
+        tdNom.innerHTML=r.nom;
+        trHeader.appendChild(tdNom);
+
+        const tdLatitud=document.createElement('TH');
+        tdLatitud.innerHTML=r.latitud;
+        trHeader.appendChild(tdLatitud);
+
+        const tdLongitud=document.createElement('TH');
+        tdLongitud.innerHTML=r.longitud;
+        trHeader.appendChild(tdLongitud);
+
+        const tdCiutad=document.createElement('TH');
+        tdCiutad.innerHTML=r.ciutad;
+        trHeader.appendChild(tdCiutad);
+            
+        })
+        document.querySelector("#resultat").innerHTML="";
+        document.querySelector('#resultat').appendChild(taula);
+        }    
+
+       
+(async function(){
+    const Aeroport= await loadAeroports();
+    document.querySelector('#cercador').addEventListener("input",function(){
+            const search =this.value;
+            Resultat=cerca(aeroports,search);
+            console.log(Resultat);
+            pintar();
+        })
+
+})()
+       
+    </script>
+</body>
+</html>

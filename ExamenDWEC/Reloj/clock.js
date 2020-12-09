@@ -5,7 +5,7 @@ ctx.translate(radius, radius);
 radius = radius * 0.90;
 drawClock(ctx, radius);
 
-function drawClock() {
+export function drawClock() {
     drawFace(ctx, radius);
     drawNumbers(ctx, radius);
     drawTime(ctx, radius);
