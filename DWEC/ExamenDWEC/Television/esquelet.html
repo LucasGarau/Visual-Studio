@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+
+<head>
+    <title>Examen Javascript</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Ranga');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            position: relative;
+            width: 100%;
+            background-image: url('img/background-room2.jpg');
+            background-size: cover;
+            background-position-y: top;
+            font-family: Ranga;
+        }
+
+        #title {
+            text-align: center;
+            position: relative;
+            top: 5%;
+            font-size: 20pt;
+        }
+
+        #timer {
+            font-size: 30pt;
+            text-align: center;
+            position: relative;
+            top: 7%;
+        }
+
+        #screen {
+            position: relative;
+            top: 10%;
+            margin: 0 auto 0 auto;
+            width: 450px;
+        }
+
+        #tv {
+            width: 450px;
+            height: 270px;
+            position: relative;
+            z-index: 2;
+        }
+
+        #program {
+            width: 400px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1;
+        }
+
+        #remote {
+            position: relative;
+            top: 15%;
+            margin: 0 auto 0 auto;
+            width: 450px;
+            text-align: center;
+        }
+
+        .button {
+            background-color: #bdc3c7;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .button-xs {
+            background-color: #bdc3c7;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 13px;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        #programacio {
+            position: relative;
+            top: 25%;
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        table {
+            width: 100%;
+            background-color: white;
+        }
+
+        td,
+        th {
+            padding: 5px;
+        }
+
+        table,
+        tr,
+        td {
+            border: solid 1px #333333;
+            text-align: left;
+            border-collapse: collapse;
+        }
+
+        caption {
+            font-size: 15pt;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="title">
+        <h1>Examen Javascript</h1>
+    </div>
+    <div id="timer">5</div>
+    <div id="screen">
+        <img src="img/tv.png" alt="tv" id="tv">
+        <video autoplay loop id="program">
+            <source src="videos/alldayfilms.webm" type="video/webm" id="program-source">
+        </video>
+    </div>
+
+    <div id="remote">
+        <button onclick="anterior();" class="button">&lt;&lt;</button>
+        <button onclick="play();" class="button">Play</button>
+        <button id="play" class="button">Play</button>
+        <button onclick="stop();" class="button">Stop</button>
+        <button onclick="seguent();" class="button">&gt;&gt;</button>
+    </div>
+
+    <div id="programacio">
+        <div id="canals">
+            <button onclick="loadProgramacio(1)" class="button-xs">All Day Films</button>
+            <button onclick="loadProgramacio(2)" class="button-xs">Kids TV</button>
+            <button onclick="loadProgramacio(3)" class="button-xs">Nature +</button>
+            <button onclick="loadProgramacio(4)" class="button-xs">Sports TV</button>
+            <button onclick="loadProgramacio(5)" class="button-xs">Tech Today</button>
+            <button onclick="loadProgramacio(6)" class="button-xs">Xtrem Sports</button>
+        </div>
+        <table>
+            <caption>Programació</caption>
+            <tr>
+                <th>Programa</th>
+                <th>Hora</th>
+                <th>Classificació</th>
+            </tr>
+            <tr>
+                <td>Programa de prova</td>
+                <td>00:00 - 00:00</td>
+                <td>+7 anys</td>
+            </tr>
+        </table>
+    </div>
+<script type="module">
+    import {tv} from './tv.js'
+    const itv = new tv();
+    document.querySelector("#play").addEventListener('click',function(){
+        itv.play();
+    })
+</script>
+    <script>
+        /* Exercici a */
+        function play() {
+            document.querySelector("#program").play();
+            countdown();
+        };
+
+        function stop() {
+            document.querySelector("#program").pause();
+        };
+        /* Exercici b */
+        let current = 0;
+        const channels = ["alldayfilms", "kidstv", "natureplus", "sportstv", "technologytoday", "xtremsports"];
+
+        function seguent() {
+            document.querySelector("#program-source").src = `videos/${channels[Math.abs(++current % channels.length)]}.webm`;
+            document.querySelector("#program").load();
+        }
+
+        function anterior() {
+            document.querySelector("#program-source").src = `videos/${channels[Math.abs(--current % channels.length)]}.webm`;
+            document.querySelector("#program").load();
+        }
+        /* Exercici c */
+        let interval;
+        function countdown() {
+            let temps = parseInt(document.querySelector("#timer").innerHTML);
+            clearInterval(interval);
+            interval = setInterval(function () {
+                temps--;
+
+                document.querySelector("#timer").innerHTML = temps;
+
+                if (temps === 0) {
+                    document.querySelector("#timer").innerHTML = 5;
+                    stop();
+                    clearInterval(interval);
+                }
+            }, 1000)
+        }
+
+        /* Exercici d */
+function loadProgramacio(canal){
+
+const peticions=[];
+for (let i = 0; i < 24; i++) {
+    const peticio = fetch("http://server247.cfgs.esliceu.net/exercicis/programacio/tv",{
+        method: 'POST',
+        headers: {'Content-Type' : 'application/x-www-form-urlencoded'},
+        body: `can=${canal}&hour=${i}`
+        //ESTO SE PUEDE CAMBIAR POR JSON PARA QUE TE SAQUE UN JSON
+    }).then(x=>x.text());
+
+    peticions.push(peticio);
+    
+}
+    Promise.all(peticions).then(resposta=>{
+        document.querySelector("table").innerHTML="";
+
+        resposta.forEach(resp=> {
+            const r = JSON.parse(resp);
+            let fila = "<tr>"
+            fila+=`<td>${r.program}</td>`
+            fila+=`<td>${r.hour}:00 -${r.hour+1}:00 </td>`
+            fila+=`<td>+7anys</td>`
+            fila+='</tr>'
+            document.querySelector("table").innerHTML += fila;
+            
+        });
+    }
+
+    )
+}
+        /* Exercici e */
+
+    </script>
+</body>
+
+</html>

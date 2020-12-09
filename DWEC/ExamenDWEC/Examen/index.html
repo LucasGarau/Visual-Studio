@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>The Asteroid Project</title>
+
+    <link rel="stylesheet" href="assets/css/nasa.css">
+</head>
+
+<body>
+    <header>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/1200px-NASA_logo.svg.png"
+            alt="logo nasa" width="1200" height="993">
+    </header>
+    <main>
+        <aside>
+            <select id="dates" multiple>
+
+            </select>
+            <button id="cerca">Cerca asteroides</button>
+            <p>Prem Ctrl o Cmd per seleccionar vàries dates a la vegada</p>
+        </aside>
+        <section>
+            <div>
+                <h2>Resultat</h2>
+            </div>
+            <div id="taula">Sense Resultats</div>
+            <div id="paginacio">
+                <button id="anterior">Anterior</button>
+                <button id="seguent">Següent</button>
+            </div>
+        </section>
+    </main>
+    
+    <script type="text/javascript" src="./samples/asteroids.json">//Per fer durant no hi ha internet</script>
+    <script type="module">
+        //Exercici 1
+        import { getDates, getSelectValues } from './assets/js/dates.js';
+const dates=getDates();        
+console.log(dates);
+
+var select = document.getElementById("dates");
+for (var i = 0; i < dates.length; i++) {
+                var opt = dates[i].label;
+                var el = document.createElement("option");
+                el.textContent = opt;
+                el.value = opt;
+                select.appendChild(el);
+            }
+            document.getElementById("dates").addEventListener("change",getSelectValues(document.getElementById("dates")))
+    </script>
+   
+    <script>
+
+async function meteoriteload(data) {
+    const response = await fetch('http://server247.cfgs.esliceu.net/exercicis/nasa?'+data);
+    const meteorits = await response.json();
+    return meteorits;
+}
+
+
+function paint(data){
+    const mydata = meteoriteload(data);
+    console.log(mydata);
+for (let index = 0; index < mydata.length; index++) {
+console.log(i);
+    
+}
+    document.querySelector("#taula").innerHTML = "";
+/*
+    mydata.forEach(resp => {
+        const r = JSON.parse(resp);
+        let fila = "<tr>"
+        fila += `<td>${r.name}</td>`
+        fila += `<td>${r.is_potentially_hazardous_asteroid}</td>`
+        fila += `<td>+7anys</td>`
+        fila += '</tr>'
+        document.querySelector("#taula").innerHTML += fila;
+
+    });*/
+    
+}
+
+function pintar3(resultat) {
+            const taula = document.createElement('TABLE');
+
+            const trHeader = taula.insertRow(0);
+            taula.appendChild(trHeader);
+
+            const thNom = trHeader.insertCell(0);
+            thNom.appendChild(document.createTextNode('Nom'));
+            trHeader.appendChild(thNom);
+
+            const thLatitud = trHeader.insertCell(0);
+            thLatitud.appendChild(document.createTextNode('Es Perillos?'));
+            trHeader.appendChild(thLatitud);
+
+            const thLongitud = trHeader.insertCell(0);
+            thLongitud.appendChild(document.createTextNode('Diametre'));
+            trHeader.appendChild(thLongitud);
+
+            const thCiutat = trHeader.insertCell(0);
+            thCiutat.appendChild(document.createTextNode('Diametre max'));
+            trHeader.appendChild(thCiutat);
+
+            const thCiutat = trHeader.insertCell(0);
+            thCiutat.appendChild(document.createTextNode('Diametre max'));
+            trHeader.appendChild(thCiutat);
+
+
+
+            resultat.forEach(r => {
+                const tr = taula.insertRow(0);
+                taula.appendChild(tr);
+
+                const tdCodi = tr.insertCell(0);
+                tdCodi.appendChild(document.createTextNode(r.codi));
+                tr.appendChild(tdCodi);
+
+                const tdNom = tr.insertCell(0);
+                tdNom.appendChild(document.createTextNode(r.nom));
+                tr.appendChild(tdNom);
+
+                const tdLatitud = tr.insertCell(0);
+                tdLatitud.appendChild(document.createTextNode(r.latitud));
+                tr.appendChild(tdLatitud);
+
+                const tdLongitud = tr.insertCell(0);
+                tdLongitud.appendChild(document.createTextNode(r.longitud));
+                tr.appendChild(tdLongitud);
+
+                const tdCiutat = tr.insertCell(0);
+                tdCiutat.appendChild(document.createTextNode(r.ciutat));;
+                tr.appendChild(tdCiutat);
+            })
+
+            document.querySelector('#resultat').innerHTML = "";
+            document.querySelector('#resultat').appendChild(taula);
+
+        }
+
+
+       
+(function () {
+  paint("2020-12-08");
+})();
+    </script>
+
+    <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+    
+</body>
+
+</html>

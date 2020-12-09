@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <label>Cercador d'aeroports</label>
+    <input id="cercador" type="text">
+    <div id="resultat"></div>
+    <script>
+        /*
+        Crear un cercador d'aeroports on es pugui cercar per
+        CODI, per NOM o per CIUTAT d'aeroport
+
+        Objecte Aeroport amb els següents camps:
+
+        codi
+        nom
+        latitud
+        longitud
+        ciutat
+
+        2 estratègies
+
+        1º - Fer una petició fetch a cada tecla que premem
+        2º - BONA - Carregar els aeroports UNA UNICA VEGADA i després feim les cerques sobre aquestes dades
+        */
+
+        //let aeroports = [];
+        //let resultat = [];
+
+        function Aeroport(codi, nom, latitud, longitud, ciutat) {
+            this.codi = codi;
+            this.nom = nom;
+            this.latitud = latitud;
+            this.longitud = longitud;
+            this.ciutat = ciutat;
+        }
+
+
+        async function loadAeroports() {
+            const fetchAeroports = await fetch("http://server247.cfgs.esliceu.net/exercicis/airports")
+            const aeroports = await fetchAeroports.json();
+
+            return aeroports.map(a => new Aeroport(a.code, a.name, a.lat, a.lon, a.city));
+        }
+
+        function cerca(aeroports, s) {
+            return aeroports.filter(a =>
+                a.nom.toUpperCase().includes(s.toUpperCase()) ||
+                a.codi.toUpperCase().includes(s.toUpperCase()) ||
+                a.ciutat.toUpperCase().includes(s.toUpperCase())
+            )
+        }
+
+        function pintar(resultat) {
+            const taula = document.createElement('TABLE');
+
+            const trHeader = document.createElement('TR');
+            taula.appendChild(trHeader);
+
+            const thCodi = document.createElement('TH');
+            thCodi.innerHTML = "Codi"
+            trHeader.appendChild(thCodi);
+
+            const thNom = document.createElement('TH');
+            thNom.innerHTML = "Nom"
+            trHeader.appendChild(thNom);
+
+            const thLatitud = document.createElement('TH');
+            thLatitud.innerHTML = "Latitud"
+            trHeader.appendChild(thLatitud);
+
+            const thLongitud = document.createElement('TH');
+            thLongitud.innerHTML = "Longitud"
+            trHeader.appendChild(thLongitud);
+
+            const thCiutat = document.createElement('TH');
+            thCiutat.innerHTML = "Ciutat"
+            trHeader.appendChild(thCiutat);
+
+            resultat.forEach(r => {
+                const tr = document.createElement('TR');
+                taula.appendChild(tr);
+
+                const tdCodi = document.createElement('TD');
+                tdCodi.innerHTML = r.codi
+                tr.appendChild(tdCodi);
+
+                const tdNom = document.createElement('TD');
+                tdNom.innerHTML = r.nom
+                tr.appendChild(tdNom);
+
+                const tdLatitud = document.createElement('TD');
+                tdLatitud.innerHTML = r.latitud
+                tr.appendChild(tdLatitud);
+
+                const tdLongitud = document.createElement('TD');
+                tdLongitud.innerHTML = r.longitud
+                tr.appendChild(tdLongitud);
+
+                const tdCiutat = document.createElement('TD');
+                tdCiutat.innerHTML = r.ciutat;
+                tr.appendChild(tdCiutat);
+            })
+
+            document.querySelector('#resultat').innerHTML = "";
+            document.querySelector('#resultat').appendChild(taula);
+        }
+
+        function pintar2(resultat) {
+            const taula = document.createElement('TABLE');
+
+            const trHeader = document.createElement('TR');
+            taula.appendChild(trHeader);
+
+            const thCodi = document.createElement('TH');
+            thCodi.appendChild(document.createTextNode('Codi'));
+            trHeader.appendChild(thCodi);
+
+            const thNom = document.createElement('TH');
+            thNom.appendChild(document.createTextNode('Nom'));
+            trHeader.appendChild(thNom);
+
+            const thLatitud = document.createElement('TH');
+            thLatitud.appendChild(document.createTextNode('Latitud'));
+            trHeader.appendChild(thLatitud);
+
+            const thLongitud = document.createElement('TH');
+            thLongitud.appendChild(document.createTextNode('Longitud'));
+            trHeader.appendChild(thLongitud);
+
+            const thCiutat = document.createElement('TH');
+            thCiutat.appendChild(document.createTextNode('Ciutat'));
+            trHeader.appendChild(thCiutat);
+
+            resultat.forEach(r => {
+                const tr = document.createElement('TR');
+                taula.appendChild(tr);
+
+                const tdCodi = document.createElement('TD');
+                tdCodi.appendChild(document.createTextNode(r.codi));
+                tr.appendChild(tdCodi);
+
+                const tdNom = document.createElement('TD');
+                tdNom.appendChild(document.createTextNode(r.nom));
+                tr.appendChild(tdNom);
+
+                const tdLatitud = document.createElement('TD');
+                tdLatitud.appendChild(document.createTextNode(r.latitud));
+                tr.appendChild(tdLatitud);
+
+                const tdLongitud = document.createElement('TD');
+                tdLongitud.appendChild(document.createTextNode(r.longitud));
+                tr.appendChild(tdLongitud);
+
+                const tdCiutat = document.createElement('TD');
+                tdCiutat.appendChild(document.createTextNode(r.ciutat));;
+                tr.appendChild(tdCiutat);
+            })
+
+            document.querySelector('#resultat').innerHTML = "";
+            document.querySelector('#resultat').appendChild(taula);
+        }
+
+        function pintar3(resultat) {
+            const taula = document.createElement('TABLE');
+
+            const trHeader = taula.insertRow(0);
+            taula.appendChild(trHeader);
+
+            const thCodi = trHeader.insertCell(0);
+            thCodi.appendChild(document.createTextNode('Codi'));
+            trHeader.appendChild(thCodi);
+
+            const thNom = trHeader.insertCell(0);
+            thNom.appendChild(document.createTextNode('Nom'));
+            trHeader.appendChild(thNom);
+
+            const thLatitud = trHeader.insertCell(0);
+            thLatitud.appendChild(document.createTextNode('Latitud'));
+            trHeader.appendChild(thLatitud);
+
+            const thLongitud = trHeader.insertCell(0);
+            thLongitud.appendChild(document.createTextNode('Longitud'));
+            trHeader.appendChild(thLongitud);
+
+            const thCiutat = trHeader.insertCell(0);
+            thCiutat.appendChild(document.createTextNode('Ciutat'));
+            trHeader.appendChild(thCiutat);
+
+
+            resultat.forEach(r => {
+                const tr = taula.insertRow(0);
+                taula.appendChild(tr);
+
+                const tdCodi = tr.insertCell(0);
+                tdCodi.appendChild(document.createTextNode(r.codi));
+                tr.appendChild(tdCodi);
+
+                const tdNom = tr.insertCell(0);
+                tdNom.appendChild(document.createTextNode(r.nom));
+                tr.appendChild(tdNom);
+
+                const tdLatitud = tr.insertCell(0);
+                tdLatitud.appendChild(document.createTextNode(r.latitud));
+                tr.appendChild(tdLatitud);
+
+                const tdLongitud = tr.insertCell(0);
+                tdLongitud.appendChild(document.createTextNode(r.longitud));
+                tr.appendChild(tdLongitud);
+
+                const tdCiutat = tr.insertCell(0);
+                tdCiutat.appendChild(document.createTextNode(r.ciutat));;
+                tr.appendChild(tdCiutat);
+            })
+
+            document.querySelector('#resultat').innerHTML = "";
+            document.querySelector('#resultat').appendChild(taula);
+
+        }
+
+
+        (async function () {
+            const aeroports = await loadAeroports();
+
+            document.querySelector("#cercador").addEventListener("input", function () {
+                const search = this.value;
+                const resultat = cerca(aeroports, search);
+                pintar3(resultat);
+            })
+        })()
+
+
+    </script>
+</body>
+
+</html>
