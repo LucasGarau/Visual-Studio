@@ -1,0 +1,19 @@
+@for $i from 0 through 10 {
+  @for $j from 0 through 10 {
+    @for $k from 0 through 10 {
+    .color-#{$i*10}-#{$j*10}-#{$k*10}{
+      color:rgb($i*10,$j*10,$k*10);
+    }
+  }
+}
+}
+
+@for $i from 0 through 10 {
+  @for $j from 0 through 10 {
+    @for $k from 0 through 10 {
+    .colorbg-#{$i*10}-#{$j*10}-#{$k*10}{
+      background-color:rgb($i*10,$j*10,$k*10);
+    }
+  }
+}
+}

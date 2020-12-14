@@ -1,0 +1,27 @@
+%pproperties {
+    text-emphasis: justif;
+    color: $defaultcolor;
+    background-color: darken($color: white, $amount: 25%);
+  }
+  
+  p {
+    @extend %pproperties;
+    background-color: lighten($color: white, $amount: 50%);
+ }
+  .success {
+    @extend %pproperties;
+    color: $sucesscolor;
+    
+  }
+  
+  .error {
+    @extend %pproperties;
+    color: $errorcolor;
+
+  }
+  
+  .warning {
+    @extend %pproperties;
+    color: $warningcolor;
+    
+  }
