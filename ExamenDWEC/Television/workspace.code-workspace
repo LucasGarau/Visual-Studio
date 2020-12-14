@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"name": "examenDIWTema1 2",
+			"path": "..\\..\\..\\..\\..\\Descargas\\examenDIWTema1 2"
+		},
+		{
+			"name": "Visual Studio",
+			"path": "..\\.."
+		},
+		{
+			"name": "examen original",
+			"path": "..\\..\\..\\..\\..\\Descargas\\examen original"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true,
+		"liveServer.settings.multiRootWorkspaceName": "Visual Studio"
+	}
+}
