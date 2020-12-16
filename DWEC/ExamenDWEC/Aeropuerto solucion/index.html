@@ -226,12 +226,13 @@
 
 
         (async function () {
-            const aeroports = await loadAeroports();
-
+            const partitures = await loadAeroports();
+         
             document.querySelector("#cercador").addEventListener("input", function () {
                 const search = this.value;
                 const resultat = cerca(aeroports, search);
                 pintar3(resultat);
+               
             })
         })()
 
