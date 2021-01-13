@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="result"></div>
+
+<script>
+    if (typeof(EventSource)){
+        const source = new EventSource("https://server247.cfgs.esliceu.net:24743/exercicis/sporttracker/getcoords/stream");
+        source.onmessage = function (event) {
+            document.querySelector("#result").innerHTML= event.data;
+        }
+    }
+
+    let w2;
+
+if(typeof(Worker)){
+
+    if(!w2){
+        w2 = new Worker ('./worker2.js')
+    }
+    w2.onmessage = function(event){
+        let resultat= event.data;
+console.log(resultat);
+        if(window.Notification && Notification.permission !== "denied") {
+	Notification.requestPermission(function(status) {
+		var n = new Notification(resultat.user, { 
+            body: resultat.message,
+            icon: './1.jpg'
+
+		}); 
+	});
+}
+}
+}
+
+
+</script>
+</body>
+</html>
