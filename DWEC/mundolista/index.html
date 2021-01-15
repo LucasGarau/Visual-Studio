@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Page Title</title>
+</head>
+
+<body>
+    <input type="text" id="cercador">
+    <div id="resultat"></div>
+
+    <script>
+        const db = indexedDB.open('Fruites', 1);
+
+        db.onupgradeneeded = function (upgradeDB) {
+            const database = upgradeDB.target.result;
+
+            const fruitaObj = database.createObjectStore('Fruita', { keyPath: 'nom' })
+
+            starttable();
+            fruitaObj.createIndex("nom","nom");
+        }
+    
+        function pais(codi, nom, cities) {
+            this.nom = nom;
+           this.cities = cities;
+        }
+           
+
+
+        //INSERT
+        function insertfruit(pais,ciudades) {
+           
+            const nom =pais;
+            const transaccio = db.result.transaction(['Fruita'], 'readwrite');
+            transaccio.objectStore('Fruita').add({
+                nom: nom,
+                ciudades:ciudades,
+                
+            })
+        }
+
+
+        function selectall() {
+            const transaccio = db.result.transaction(['Fruita'], 'readwrite');
+            const fruitTable = transaccio.objectStore('Fruita').getAll();
+
+            fruitTable.onsuccess = function (ev) {
+                const fruites = ev.target.result;
+                for (let index = 1; index < fruites.length; index++) {
+                    document.querySelector('#resultat').innerHTML += fruites[index].nom+": "+fruites[index].ciudades;
+                    document.querySelector('#resultat').innerHTML += "<br><br>";
+
+                }
+
+                document.querySelector("#cercador").addEventListener("input", function () {
+                const search = this.value;
+   
+                history.pushState({
+                        cerca: search
+                    }, "", search);
+
+            
+                if (search.length>=3){
+                     const resultat = cerca(fruites, search);
+                     console.log(resultat);
+                     const resultat2 = cerca2(fruites,search);
+                     console.log(resultat2);
+                     document.querySelector('#resultat').innerHTML = "";
+                     for (let index = 0; index < resultat.length; index++) {
+                        document.querySelector('#resultat').innerHTML += resultat[index].nom+" ";
+                         
+                     }
+
+                     for (let index = 0; index < resultat2.length; index++) {
+                         if (index!=null){
+                             console.log(resultat2)
+                            document.querySelector('#resultat').innerHTML += resultat2[index] + " ";
+                         }
+                                                 
+
+                         
+                     }
+                }
+            })
+             window.onpopstate = function(event){
+                 if(event && event.state && event.state.cerca){
+                     cerca(event.state.cerca);
+                     document.querySelector("input").value=event.state.cerca;
+                 }
+
+             }
+            
+            }
+        }
+
+/*
+            function displayDataByIndex() {
+
+  const transaccio = db.result.transaction(['Fruita'], 'readwrite');
+            const fruitTable = transaccio.objectStore('Fruita');
+
+  var myIndex = fruitTable.index('nom');
+  myIndex.openCursor().onsuccess = function(event) {
+    var cursor = event.target.result;
+    if(cursor) {
+      cursor.continue();
+    } else {
+      console.log('Entries all displayed.');
+    }
+  };
+};
+
+*/
+        async function loadAeroports() {
+            const fetchAeroports = await fetch("https://raw.githubusercontent.com/David-Haim/CountriesToCitiesJSON/master/countriesToCities.json")
+            const aeroports = await fetchAeroports.json();
+            return aeroports;
+        }
+        
+        function cerca(aeroports, s) {
+            return aeroports.filter(a =>
+                a.nom.toUpperCase().includes(s.toUpperCase())
+            )
+        }
+
+        function cerca2(aeroports, s) {
+return aeroports.map(function(el){
+    return el.ciudades.filter(a =>
+                a.toUpperCase().includes(s.toUpperCase())
+            )
+});
+
+        }
+
+
+
+        async function starttable() {
+        const aeroports = await loadAeroports();
+        for(var property in aeroports){
+         insertfruit(property,aeroports[property]);
+        }
+
+
+        }
+
+        ( function () {         
+            db.onsuccess = function (event) { 
+                selectall();
+           
+      }
+      
+ 
+
+           
+        })()
+    </script>
+</body>
+
+</html>

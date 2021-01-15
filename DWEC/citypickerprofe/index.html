@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <h1>Cercador de paisos</h1>
+    <input>
+    <script>
+        (async function(){
+      
+        const openRequest = indexedDB.open("cities", 1);
+
+        openRequest.onupgradeneeded= function (event){
+            const db = event.target.result;
+            db.createObjectStore("city",{autoIncrement:true})
+
+            const remotecitiesFetch= await fetch("https://raw.githubusercontent.com/David-Haim/CountriesToCitiesJSON/master/countriesToCities.json")
+        const remoteCities = await remotecitiesFetch.json();
+
+        const countries = Object.keys(remoteCities);
+
+        const countriesObject = contries.map(country=>{
+            return {
+                country: country,
+                cities : remoteCities[country]
+            }
+        })
+            const transaction = db.transaction(['city'],'readwrite');
+            const city = transaction.objectStore('city');
+
+            countriesObject.forEach(c => {
+                c.cities.forEach(cc => {
+                    city.add({
+                     nom:cc,
+                     pais:c.country   
+                    })
+                    
+                });
+                
+            });
+            document.querySelector("input").addEventListener('input',function(ev){
+                const valor= ev.target.value;
+                if(valor.length>= 3) {
+                    cerca(valor);
+
+                    //PUSH STATE
+                    history.pushState({
+                        cerca: valor
+                    },"",valor)
+                }
+            })
+
+            function cerca(valor) {
+                const db= openRequest.result;
+                const transaction=db.transaction(['city'],'readonly');
+                const city= transaction.objectStore('city');
+                const cities = city.getAll;
+                cities.onsucess=function (e) {
+                           const citiesAll = e.target.result;
+                           const citiesFiltered= citiesAll.filter(city => city.nom.toUpperCase().indexOf(valor.toUpperCase()) != -1);
+                       //    const citiesSorted = citiesFiltered.sort((citya,cityb) => cityb.name.localCompare(citya.nom))
+
+                           document.querySelector("#result").innerHTML='<table id="taula></table>'
+                           const table=document.querySelector('#taula')
+                           citiesSorted.forEach(c => {
+                               const row=table.insertRow(0);
+                               row.insertCell(0).innerHTML=c.nom.toUpperCase().split(valor.toUpperCase()).join('<span class="highlight">'+
+                                valor.toUpperCase() + '</span>');
+                               row.insertCell(1).innerHTML=c.pais;
+                           });
+                }
+            }
+
+        }
+    })()
+    </script>
+</body>
+</html>

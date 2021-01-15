@@ -49,12 +49,11 @@
             return aeroports.map(a => new Aeroport(a.code, a.name, a.lat, a.lon, a.city));
         }
 
-        function cerca(partitures, s) {
-            return partitures.filter(a =>
-            partitures.notas.      return partitures.filter(a =>
-            partitures.notas.toUpperCase().sort((a, b) => (a.ordre) - (b.ordre).includes(s.toUpperCase())
-            )
-        }.includes(s.toUpperCase())
+        function cerca(aeroports, s) {
+            return aeroports.filter(a =>
+                a.nom.toUpperCase().includes(s.toUpperCase()) ||
+                a.codi.toUpperCase().includes(s.toUpperCase()) ||
+                a.ciutat.toUpperCase().includes(s.toUpperCase())
             )
         }
 
