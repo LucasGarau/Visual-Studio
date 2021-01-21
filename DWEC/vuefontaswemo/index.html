@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+    <label for="cercador">Cercador de icones</label>
+    <input type="text" placeholder="facebook" v-model="cerca">
+    <button @click="cercaricona">Cerca</button>
+<h5 v-if="missatge">{{missatge}}</h5>
+    <div v-if="icon.label">
+        <h2>{{icon.label}}</h2>
+        <svg :width="icon.width" :height="icon.height" xmlns="http://www.w3.org/2000/svg">
+            <path :d="icon.path"/>
+          
+            
+          
+          </svg>
+          
+    </div>
+
+</div>
+    <script src="https://unpkg.com/vue@next">
+    
+  
+
+    
+</script>
+<script>
+      Vue.createApp({
+        data(){
+            return{
+                missatge: '',
+                cerca:'',
+                icon:{
+                    width: '',
+                    height: '',
+                    label: '',
+                    path: ''
+                }
+            }
+        },
+        methods: {
+           async cercaricona(){
+
+
+                const iconfetch= await fetch("http://server247.cfgs.esliceu.net/exercicis/other/icons/get?nom="+this.cerca);
+                if(iconfetch.status>=200 && iconfetch.status<=299){
+                const icon=await iconfetch.json();
+                this.icon=icon;
+                this.missatge='';
+            }else{
+                const missatge = await iconfetch.text();
+                this.missatge=missatge;
+                this.icon.label='';
+            }
+/*
+                this.icon.width=icon.width;
+                console.log(this.icon.height);
+                this.icon.height=icon.height;
+                this.icon.label=icon.label;
+                this.icon.path= icon.path;
+                */
+            }
+        }
+    }).mount('#app')</script>
+</script>
+</body>
+</html>
