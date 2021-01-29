@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Page Title</title>
+</head>
+
+<body>
+    <input type="text" id="nom">
+    <input type="text" id="color">
+
+    <button onclick="insertfruit()">Inserir fruita</button>
+    <button onclick="updatefruit()">Update fruita</button>
+    <button onclick="deletefruit()">Delete fruita</button>
+    <button onclick="selectall()">Select Fruita</button>
+
+
+    <script>
+        const db = indexedDB.open('Fruites', 1);
+
+        db.onupgradeneeded = function (upgradeDB) {
+            const database = upgradeDB.target.result;
+
+            const fruitaObj = database.createObjectStore('Fruita', { keyPath: 'nom' })
+
+//Nomes podem cercar per keypath , autoincrement o un index.
+//fruitaObj.createIndex("color","color",{unique: true})
+fruitaObj.createIndex("color","color");
+
+            fruitaObj.add({
+                nom: 'Plàtan',
+                color: 'Groc'
+            })
+
+            fruitaObj.add({
+                nom: 'Poma',
+                color: 'Vermell'
+            })
+        }
+
+
+        //INSERT
+        function insertfruit() {
+            const nom = document.querySelector("#nom").value;
+            const color = document.querySelector("#color").value;
+            const transaccio = db.result.transaction(['Fruita'], 'readwrite');
+            transaccio.objectStore('Fruita').add({
+                nom: nom,
+                color: color
+            })
+        }
+
+
+
+
+
+        //DELETE
+        function deletefruit() {
+            const nom = document.querySelector("#nom").value;
+            const transaccio = db.result.transaction(['Fruita'], 'readwrite');
+            transaccio.objectStore('Fruita').delete(nom)//CLAU PRIMARIA COMO PARAMETRO(autogenerate,aid si no el keypath
+
+        }
+
+
+
+        //PUT / Update
+        function updatefruit() {
+            const nom = document.querySelector("#nom").value;
+            const color = document.querySelector("#color").value;
+            const transaccio = db.result.transaction(['Fruita'], 'readwrite');
+            transaccio.objectStore('Fruita').put({
+                nom: nom,
+                color: color
+            })
+        }
+
+        //Select de todas las fruitas
+        function selectall() {
+            const transaccio = db.result.transaction(['Fruita'], 'readwrite');
+            const fruitTable = transaccio.objectStore('Fruita').getAll();
+
+            fruitTable.onsuccess = function (ev) {
+                const fruites = ev.target.result;
+                console.log(fruites);
+            }
+        }
+    </script>
+</body>
+
+</html>

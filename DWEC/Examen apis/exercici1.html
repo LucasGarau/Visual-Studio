@@ -1,0 +1,189 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Endreça les Joguines</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="lib/bootstrap-3.3.7-dist/css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+    <h1>Endreça les joguines!</h1>
+    <button onclick="reset()"> Reset</button>
+    <div id="boxes">
+        <img src="img/boxblue.png" alt="blue box" class="box" ondrop="dropblau(event)" ondragover="allowDrop(event)" />
+        <img src="img/boxgreen.png" alt="green box" class="box" ondrop="dropverd(event)"
+            ondragover="allowDrop(event)" />
+        <img src="img/boxred.png" alt="red box" class="box" ondrop="dropred(event)" ondragover="allowDrop(event)" />
+    </div>
+
+    <div id="toys">
+        <img id=vermell-1 src="img/joguines/p.jpg" draggable="true" ondragstart="drag(event)" alt="" />
+        <img id=blau-2 src="img/joguines/sa_1454415777toy.jpg" draggable="true" ondragstart="drag(event)" alt="" />
+        <img id=vermell-3 src="img/joguines/green-toy-fire-truck.jpg" draggable="true" ondragstart="drag(event)"
+            alt="" />
+        <img id=verd-4 src="img/joguines/71x5BSdfRlL._SL1500_.jpg" draggable="true" ondragstart="drag(event)" alt="" />
+        <img id=verd-5 src="img/joguines/home_06picpresent.jpg" draggable="true" ondragstart="drag(event)" alt="" />
+        <img id=vermell-6 src="img/joguines/lillabo-toy-car-red__0175385_PE328763_S4.JPG" draggable="true"
+            ondragstart="drag(event)" alt="" />
+        <img id=vermell-7 src="img/joguines/robot-295165_960_720.png" draggable="true" odraggable="true"
+            ondragstart="drag(event)" ndragstart="drag(event)" alt="" />
+        <img id=blau-8 src="img/joguines/s464826693606066693_p949_i1_w886.jpeg" draggable="true"
+            ondragstart="drag(event)" alt="" />
+        <img id=verd-9 src="img/joguines/file_85234.jpg" draggable="true" ondragstart="drag(event)" alt="" />
+    </div>
+    <script>
+        //El vostre codi va aquí
+        
+        function allowDrop(ev) {
+            ev.preventDefault();let count = 0;
+        let fin = 9;
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function dropred(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            if (data.includes('vermell')) {
+                ev.target.appendChild(document.getElementById(data));
+                Notificationbien();
+                localStorage.setItem("game", document.getElementById("toys").innerHTML);
+                count += 1;
+                if (count == fin) {
+                    Notificacionfin();
+                }
+            } else {
+                Notificationmal();
+            }
+
+
+
+
+        }
+
+        function dropblau(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            if (data.includes('blau')) {
+                ev.target.appendChild(document.getElementById(data));
+                Notificationbien();
+                localStorage.setItem("game", document.getElementById("toys").innerHTML);
+                count += 1;
+
+                if (count == fin) {
+                    Notificacionfin();
+                }
+
+            } else {
+                Notificationmal();
+            }
+
+
+
+        }
+
+        function dropverd(ev) {
+            ev.preventDefault();
+
+            var data = ev.dataTransfer.getData("text");
+            if (data.includes('verd')) {
+                ev.target.appendChild(document.getElementById(data));
+                Notificationbien()
+                localStorage.setItem("game", document.getElementById("toys").innerHTML);
+                count += 1;
+                if (count == fin) {
+                    Notificacionfin();
+                }
+            } else {
+                Notificationmal();
+            }
+
+
+
+        }
+        function Notificationbien() {
+
+            if (window.Notification && Notification.permission !== "denied") {
+                Notification.requestPermission(function (status) {
+                    var n = new Notification("Resposta correcta!", {
+                        body: "Capsa correcta molt be!",
+
+
+                    });
+                    setTimeout(() => {
+                        n.close()
+                    }, 5000);
+                });
+            }
+        }
+
+        function Notificationmal() {
+
+            if (window.Notification && Notification.permission !== "denied") {
+                Notification.requestPermission(function (status) {
+                    var n = new Notification("Resposta Incorrecta!", {
+                        body: "Capsa incorrecta mira be els colors",
+
+
+                    });
+                    setTimeout(() => {
+                        n.close()
+                    }, 5000);
+                });
+            }
+        }
+
+
+        function Notificacionfin() {
+
+            if (window.Notification && Notification.permission !== "denied") {
+                Notification.requestPermission(function (status) {
+                    var n = new Notification("Has completat el joc!", {
+                        body: "Bien!",
+
+
+                    });
+                    setTimeout(() => {
+                        n.close()
+                    }, 5000);
+                });
+            }
+        }
+function reset(){
+    document.getElementById("toys").innerHTML = localStorage.getItem("gamedefault");
+    localStorage.setItem("game", localStorage.getItem("gamedefault"));
+}
+
+        (function () {
+        let count = 0;
+        let fin = 9;
+         
+            if (localStorage.game) {
+                document.getElementById("toys").innerHTML = localStorage.getItem("game");
+                count=localStorage.getItem(count);
+            } else {
+                localStorage.setItem("game", document.getElementById("toys").innerHTML);
+                localStorage.setItem("gamedefault", document.getElementById("toys").innerHTML);
+                localStorage.setItem("count", 0);
+
+            }
+          
+
+        })();
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

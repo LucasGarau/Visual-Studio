@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <title>Examen Desenvolupament en entorn client. Exercici 2.</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="lib/bootstrap-3.3.7-dist/css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
+    <style>
+        th,
+        td {
+            font-size: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Les meves jogines</h1>
+    Nom:
+    <input type="text" id="nom">
+    Estat:
+    <input type="text" id="estat">
+
+    <button onclick="inserjoguina()">Inserir Joguina</button>
+
+    <br>
+    <table id="tablajoguines" style="width:50%">
+        <tr>
+            <th>Nom</th>
+            <th>Estat</th>
+
+        </tr>
+
+    </table>
+
+
+
+    <script>
+        const db = indexedDB.open('joguines', 1);
+
+        db.onupgradeneeded = function (upgradeDB) {
+            const database = upgradeDB.target.result;
+
+            const joguinaobject = database.createObjectStore('joguina', { keyPath: 'nom' })
+
+            //Nomes podem cercar per keypath , autoincrement o un index.
+            //joguinaobject.createIndex("color","color",{unique: true})
+            joguinaobject.createIndex("estat", "estat");
+
+            joguinaobject.add({
+                nom: 'Jogina1',
+                estat: 'NOU'
+            })
+
+            joguinaobject.add({
+                nom: 'Jogina2',
+                estat: 'SEMINOU,'
+            })
+
+            joguinaobject.add({
+                nom: 'Jogina3',
+                estat: 'EMPRAT'
+            })
+
+            joguinaobject.add({
+                nom: 'Jogina4',
+                estat: 'ROMPUT'
+            })
+
+            joguinaobject.add({
+                nom: 'Jogina5',
+                estat: 'NOU'
+            })
+        }
+        db.onsuccess = function (conn) {
+            selectall();
+        }
+
+
+        function inserjoguina() {
+            const nom = document.querySelector("#nom").value;
+            const color = document.querySelector("#estat").value;
+            const transaccio = db.result.transaction(['joguina'], 'readwrite');
+            transaccio.objectStore('joguina').add({
+                nom: nom,
+                estat: color
+            })
+        }
+
+        function inserjoquina2(nom, estat) {
+            console.log(nom);
+            console.log(estat);
+            const transaccio = db.result.transaction(['joguina'], 'readwrite');
+            transaccio.objectStore('joguina').add({
+                nom: nom,
+                estat: estat
+            })
+        }
+
+
+        //Select de todas las joguinas
+        function selectall() {
+            const transaccio = db.result.transaction(['joguina'], 'readwrite');
+            const fruitTable = transaccio.objectStore('joguina').getAll();
+
+            fruitTable.onsuccess = function (ev) {
+                var table = document.getElementById("tablajoguines");
+                table.innerHTML = "";
+                let row1 = table.insertRow();
+                let date = row1.insertCell(0);
+                let name = row1.insertCell(1);
+                date.innerHTML = "NOM";
+                name.innerHTML = "ESTAT";
+
+
+                const fruites = ev.target.result;
+                fruites.forEach(element => {
+                    let row = table.insertRow();
+                    let date = row.insertCell(0);
+                    date.innerHTML = element.nom;
+                    let name = row.insertCell(1);
+                    name.innerHTML = element.estat;
+                });
+            }
+        }
+
+   
+        
+
+        if (typeof (EventSource)) {
+            const source = new EventSource("https://server247.cfgs.esliceu.net:24743/exercicis/other/joguines/stream");
+            source.onmessage = function (event) {
+
+                var joguina = event.data;
+
+                var joguinajson = JSON.parse(joguina);
+
+                history.pushState(joguinajson.nom, "", "/"+joguinajson.nom +"/"+joguinajson.estat);
+
+                inserjoquina2(joguinajson.nom, joguinajson.estat);
+                selectall();
+
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

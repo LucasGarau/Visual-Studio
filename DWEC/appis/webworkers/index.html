@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1></h1>
+    <div id="resultat"></div>
+    <div id="cities"></div>
+
+    <script>
+
+        /*
+        let resultat = 0;
+
+        for (let i = 0; i < 10000; i++) {
+            resultat += i;
+            
+        }
+        document.querySelector("#resultat").innerHTML=resultat;
+        */
+        document.querySelector("h1").innerHTML="Hello world";
+
+let w;
+let w2;
+
+if(typeof(Worker)){
+    if(!w){
+        w = new Worker ('./worker.js')
+    }
+    if(!w2){
+        w2 = new Worker ('./worker2.js')
+    }
+    w.onmessage = function(event){
+    //document.querySelector("#resultat").innerHTML=event.data;
+    }
+
+    w2.onmessage = function(event){
+        let resultat= '';
+        for (let [key,value] of Object.entries(event.data)) {
+            const cities=Array.from(value);
+
+            resultat+=`<h2>${key} </h2>`
+            cities.forEach(city =>{
+                resultat+=`<p>${city} </p>`
+
+            })
+            
+        }
+    document.querySelector("#resultat").innerHTML=resultat;
+  
+}
+}
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

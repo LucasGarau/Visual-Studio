@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+#map {
+  height : 90%;
+  width: 80%;
+  float: left;
+}
+
+#result{
+    float: right;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 90%;
+  margin: 0;
+  padding: 0;
+}
+    </style>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        <script
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn04lk6T82lfpat8BYuswnaUtlIfKZ8e8&callback=initMap&libraries=&v=weekly"
+          defer
+        ></script>
+       
+</head>
+<body>
+    <div id="map"></div>
+    <div id="result"></div>
+    
+
+<script>
+      var flightPlanCoordinates = [
+        
+
+        ];
+     var map="";
+    if (typeof(EventSource)){
+        const source = new EventSource("https://server247.cfgs.esliceu.net:24743/exercicis/sporttracker/getcoords/stream");
+        source.onmessage = function (event) {
+           
+            var cordinates=event.data;
+        var cordenadas=cordinates.split(',');
+        console.log(cordenadas[0].slice(1))
+        console.log(cordenadas[1].slice(0,-1))
+
+        pintar(cordenadas,map);
+        
+        }
+    }
+
+    let w2;
+
+if(typeof(Worker)){
+
+    if(!w2){
+        w2 = new Worker ('./worker2.js')
+    }
+    w2.onmessage = function(event){
+        let resultat= event.data;
+        document.querySelector("#result").innerHTML= resultat.user +":" + resultat.message;
+        if(window.Notification && Notification.permission !== "denied") {
+	Notification.requestPermission(function(status) {
+		var n = new Notification(resultat.user, { 
+            body: resultat.message,
+            icon: './1.jpg'
+
+        }); 
+        setTimeout(() => {
+            n.close()
+}, 5000);
+	});
+}
+}
+
+function initMap(cordenadas) {
+   map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 15,
+    center: { lat: 0, lng: 0 },
+    mapTypeId: "terrain",
+  });
+ 
+ 
+}
+
+function pintar(cordenadas){
+  
+
+  flightPlanCoordinates.push({lat: parseFloat( cordenadas[0].slice(1)), lng: parseFloat( cordenadas[1].slice(0,-1))})
+  map.setCenter({lat: parseFloat( cordenadas[0].slice(1)), lng: parseFloat( cordenadas[1].slice(0,-1))});
+    const flightPath = new google.maps.Polyline({
+    path: flightPlanCoordinates,
+    geodesic: true,
+    strokeColor: "#FF0000",
+    strokeOpacity: 1.0,
+    strokeWeight: 2,
+  });
+  flightPath.setMap(map);
+}
+
+}
+
+
+</script>
+</body>
+</html>
